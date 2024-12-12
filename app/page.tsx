@@ -1,3 +1,6 @@
+// Letzte Aktualisierung: [aktuelles Datum und Uhrzeit]
+
+
 'use client'
 
 import { useState, useEffect } from 'react'
