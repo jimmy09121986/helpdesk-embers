@@ -21,9 +21,9 @@ export default function RootLayout({
     <html lang="de">
       <body className={inter.className}>
         <UserProvider>
-          <div className="container mx-auto p-4">
+          <div className="flex flex-col min-h-screen">
             <Navigation />
-            <main>{children}</main>
+            <main className="flex-grow">{children}</main>
           </div>
           <Toaster />
         </UserProvider>
