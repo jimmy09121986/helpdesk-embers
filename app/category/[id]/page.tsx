@@ -2,14 +2,13 @@
 
 import * as React from 'react';
 import { useState, useCallback, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
-import { Trash2, Edit, Plus, X } from 'lucide-react';
+import { Trash2, Edit, X } from 'lucide-react';
 import Link from 'next/link';
 import { 
   Dialog, 
@@ -33,10 +32,9 @@ interface ErrorEntry {
   last_edited_by: string;
 }
 
-export default function ErrorEntryManager({ params }: { params: Promise<{ id: string }> }) {
-  const resolvedParams = React.use(params);
-  const { id } = resolvedParams;
-  const router = useRouter();
+export default function ErrorEntryManager() {
+  const params = useParams();
+  const id = params.id as string;
   const [description, setDescription] = useState('');
   const [solution, setSolution] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -92,11 +90,6 @@ export default function ErrorEntryManager({ params }: { params: Promise<{ id: st
     } else {
       setErrorEntries(data || []);
     }
-  };
-
-  const getCurrentTimestamp = () => {
-    const now = new Date().toLocaleString('en-US', { timeZone: 'Europe/Vienna' });
-    return new Date(now).toISOString();
   };
 
   const formatDateForDisplay = (dateString: string) => {

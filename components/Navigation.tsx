@@ -1,14 +1,9 @@
 'use client'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { cn } from "@/lib/utils"
 import { useUser } from '@/contexts/UserContext'
-import { Button } from "@/components/ui/button"
 import { HelpModal } from './HelpModal'
 
 const Navigation = () => {
-  const pathname = usePathname()
   const { user } = useUser()
 
   if (!user) {
@@ -25,17 +20,8 @@ const Navigation = () => {
     )
   }
 
-  return (
-    <nav className="flex space-x-4 mb-4">
-      <Link href="/dashboard" className={cn(
-        "text-sm font-medium transition-colors hover:text-primary",
-        pathname === "/dashboard" ? "text-primary" : "text-muted-foreground"
-      )}>
-        Dashboard
-      </Link>
-      {/* Fügen Sie hier weitere Links für eingeloggte Benutzer hinzu */}
-    </nav>
-  )
+  // Für eingeloggte Benutzer wird nichts gerendert
+  return null
 }
 
 export default Navigation

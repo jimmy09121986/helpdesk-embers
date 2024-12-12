@@ -28,7 +28,7 @@ export default function DashboardPage() {
 
   return (
     <div className={inter.className}>
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <Navigation />
         <DashboardContent />
       </div>

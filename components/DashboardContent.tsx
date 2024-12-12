@@ -235,28 +235,30 @@ export default function DashboardContent() {
   }
 
   return (
-    <div className="container mx-auto p-4 max-w-7xl">
-      <div className="flex justify-between items-center mb-4">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 space-y-4 sm:space-y-0">
         <h1 className="text-2xl font-bold">Dashboard</h1>
-        <div className="flex items-center space-x-4">
-          <div className="bg-gray-100 px-3 py-2 rounded-md">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
+          <div className="bg-gray-100 px-3 py-2 rounded-md w-full sm:w-auto">
             <span className="text-sm font-medium text-gray-700">Eingeloggt als:</span>
             <span className="ml-2 text-sm font-bold text-gray-900">{user.email}</span>
           </div>
-          <Link href="/benachrichtigung">
-            <Button variant="outline">
-              <Bell className="w-4 h-4 mr-2" />
-              SupportTickets
-              {newTicketsCount > 0 && (
-                <Badge variant="destructive" className="ml-2">
-                  {newTicketsCount}
-                </Badge>
-              )}
+          <div className="flex space-x-2 w-full sm:w-auto">
+            <Link href="/benachrichtigung" className="w-full sm:w-auto">
+              <Button variant="outline" className="w-full sm:w-auto">
+                <Bell className="w-4 h-4 mr-2" />
+                SupportTickets
+                {newTicketsCount > 0 && (
+                  <Badge variant="destructive" className="ml-2">
+                    {newTicketsCount}
+                  </Badge>
+                )}
+              </Button>
+            </Link>
+            <Button variant="outline" onClick={handleLogout} className="w-full sm:w-auto">
+              Ausloggen
             </Button>
-          </Link>
-          <Button variant="outline" onClick={handleLogout}>
-            Ausloggen
-          </Button>
+          </div>
         </div>
       </div>
 
@@ -265,39 +267,39 @@ export default function DashboardContent() {
           <CardTitle>Kategorien</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex space-x-2 mb-6">
+          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-6">
             <Input
               value={newCategory}
               onChange={(e) => setNewCategory(e.target.value)}
               placeholder="Neue Kategorie"
               className="flex-grow"
             />
-            <Button onClick={addCategory} className="whitespace-nowrap">
+            <Button onClick={addCategory} className="whitespace-nowrap w-full sm:w-auto">
               <Plus className="w-4 h-4 mr-2" /> Hinzufügen
             </Button>
           </div>
           <div className="space-y-4">
             {categories.map((category) => (
               <div key={category.id} className="bg-white shadow-sm rounded-lg p-4 transition-all duration-200 hover:shadow-md">
-                <div className="flex items-center justify-between mb-2">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-2 space-y-2 sm:space-y-0">
                   <Link href={`/category/${category.id}`} className="flex-grow">
                     <h3 className="text-lg font-semibold hover:text-blue-600 transition-colors duration-200">
                       {category.name}
                     </h3>
                   </Link>
-                  <div className="flex space-x-2">
-                    <Button variant="outline" size="sm" onClick={() => startEditingCategory(category)}>
+                  <div className="flex space-x-2 w-full sm:w-auto">
+                    <Button variant="outline" size="sm" onClick={() => startEditingCategory(category)} className="w-full sm:w-auto">
                       <Edit className="w-4 h-4 mr-1" /> Bearbeiten
                     </Button>
                     <Button variant="destructive" size="sm" onClick={() => {
                       setCategoryToDelete(category);
                       setIsDeleteDialogOpen(true);
-                    }}>
+                    }} className="w-full sm:w-auto">
                       <Trash2 className="w-4 h-4 mr-1" /> Löschen
                     </Button>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-2 text-sm text-gray-500">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-500">
                   <div className="flex items-center">
                     <User className="w-4 h-4 mr-1" /> Erstellt von: {category.created_by}
                   </div>
