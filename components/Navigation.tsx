@@ -11,14 +11,6 @@ const Navigation = () => {
 
   return (
     <nav className="flex space-x-4 mb-4">
-      {!user && (
-        <Link href="/" className={cn(
-          "text-sm font-medium transition-colors hover:text-primary",
-          pathname === "/" ? "text-primary" : "text-muted-foreground"
-        )}>
-          Home
-        </Link>
-      )}
       {user && (
         <Link href="/dashboard" className={cn(
           "text-sm font-medium transition-colors hover:text-primary",
@@ -27,12 +19,6 @@ const Navigation = () => {
           Dashboard
         </Link>
       )}
-      <Link href="/search" className={cn(
-        "text-sm font-medium transition-colors hover:text-primary",
-        pathname === "/search" ? "text-primary" : "text-muted-foreground"
-      )}>
-        Suche
-      </Link>
     </nav>
   )
 }
