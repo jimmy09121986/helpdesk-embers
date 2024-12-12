@@ -1,6 +1,3 @@
-// Letzte Aktualisierung: [aktuelles Datum und Uhrzeit]
-
-
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -13,7 +10,7 @@ import { useUser } from '../contexts/UserContext'
 import { useToast } from "@/components/ui/use-toast"
 import { SupportTicketDialog } from '../components/SupportTicketDialog'
 import { Label } from "@/components/ui/label"
-import { Loader2, Lock, Mail, Search, TicketIcon, ChevronDown, ChevronUp, Menu } from 'lucide-react'
+import { Loader2, Lock, Mail, Search, TicketIcon, ChevronDown, ChevronUp } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HelpModal } from '../components/HelpModal'
 
@@ -23,7 +20,6 @@ export default function Home() {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isLoginExpanded, setIsLoginExpanded] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
 
@@ -67,26 +63,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
-      {/* Navigation Bar */}
-      <nav className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-end h-16">
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" asChild>
-                <Link href="/search">
-                  <Search className="mr-2 h-4 w-4" />
-                  Suche
-                </Link>
-              </Button>
-              <HelpModal />
-            </div>
-          </div>
-        </div>
-      </nav>
-
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="flex flex-col items-center space-y-8">
-          {/* Hero Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -100,7 +78,6 @@ export default function Home() {
             </p>
           </motion.div>
 
-          {/* Main Content */}
           <div className="w-full max-w-2xl">
             <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-xl border-0">
               <CardContent className="p-6 space-y-6">
@@ -198,7 +175,6 @@ export default function Home() {
         </div>
       </main>
 
-      {/* Footer with Copyright */}
       <footer className="py-4 mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-center text-sm text-gray-500 dark:text-gray-400">
