@@ -269,18 +269,18 @@ export default function Search() {
                   <h3 className="text-lg font-semibold mb-2">Lösung:</h3>
                   {renderSolutionSteps(selectedError.solution)}
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-4">
                   <div>
                     <p className="font-medium">Erstellt von:</p>
                     <p className="text-gray-700">{selectedError.created_by}</p>
                   </div>
                   <div>
-                    <p className="font-medium">Zuletzt bearbeitet von:</p>
-                    <p className="text-gray-700">{selectedError.last_edited_by}</p>
-                  </div>
-                  <div>
                     <p className="font-medium">Erstellt am:</p>
                     <p className="text-gray-700">{new Date(selectedError.created_at).toLocaleString()}</p>
+                  </div>
+                  <div>
+                    <p className="font-medium">Zuletzt bearbeitet von:</p>
+                    <p className="text-gray-700">{selectedError.last_edited_by}</p>
                   </div>
                 </div>
                 {selectedError.photos && selectedError.photos.length > 0 ? (
