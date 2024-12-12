@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation'
 import { cn } from "@/lib/utils"
 import { useUser } from '@/contexts/UserContext'
 import { Button } from "@/components/ui/button"
-import { Search } from 'lucide-react'
 import { HelpModal } from './HelpModal'
 
 const Navigation = () => {
@@ -18,12 +17,6 @@ const Navigation = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-end h-16">
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" asChild>
-                <Link href="/search">
-                  <Search className="mr-2 h-4 w-4" />
-                  Suche
-                </Link>
-              </Button>
               <HelpModal />
             </div>
           </div>
