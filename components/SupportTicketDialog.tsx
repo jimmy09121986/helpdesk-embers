@@ -199,17 +199,24 @@ export function SupportTicketDialog({ children }: { children: React.ReactNode })
                 <p className="text-red-500 text-sm col-span-3 col-start-2">Bitte geben Sie eine gültige Telefonnummer ein.</p>
               )}
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="description" className="text-right">
-                Beschreibung*
+            <div className="grid grid-cols-4 items-start gap-4">
+              <Label htmlFor="description" className="text-right pt-2">
+                Anliegen*
               </Label>
-              <Textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="col-span-3"
-                required
-              />
+              <div className="col-span-3 space-y-1">
+                <Textarea
+                  id="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="w-full"
+                  placeholder="Beschreiben Sie Ihr Anliegen hier..."
+                  required
+                  maxLength={500}
+                />
+                <div className="text-sm text-gray-500">
+                  {description.length}/500 Zeichen
+                </div>
+              </div>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right">
