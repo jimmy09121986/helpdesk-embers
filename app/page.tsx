@@ -9,7 +9,6 @@ import { Card, CardContent } from "@/components/ui/card"
 import { useUser } from '../contexts/UserContext'
 import { useToast } from "@/components/ui/use-toast"
 import { SupportTicketDialog } from '../components/SupportTicketDialog'
-import { AIAssistant } from '../components/AIAssistant'
 import { Label } from "@/components/ui/label"
 import { Loader2, Lock, Mail, Search, TicketIcon, ChevronDown, ChevronUp, Menu } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -192,11 +191,6 @@ export default function Home() {
                 </div>
               </CardContent>
             </Card>
-          </div>
-
-          {/* AI Assistant */}
-          <div className="w-full max-w-2xl">
-            <AIAssistant />
           </div>
         </div>
       </main>

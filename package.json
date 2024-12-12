@@ -28,7 +28,6 @@
     "lucide-react": "^0.460.0",
     "next": "^15.0.3",
     "nodemailer": "^6.9.16",
-    "openai": "^4.73.1",
     "prisma": "^5.22.0",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
@@ -63,3 +62,4 @@
   "author": "",
   "license": "ISC"
 }
+

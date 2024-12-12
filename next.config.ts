@@ -9,7 +9,6 @@ const nextConfig = {
   },
   env: {
     RESEND_API_KEY: process.env.RESEND_API_KEY,
-    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
   },
   images: {
     domains: ['sabwkhxyalhmconggqkn.supabase.co'],
