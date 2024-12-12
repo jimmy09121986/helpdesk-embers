@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
@@ -12,7 +11,6 @@ import { SupportTicketDialog } from '../components/SupportTicketDialog'
 import { Label } from "@/components/ui/label"
 import { Loader2, Lock, Mail, Search, TicketIcon, ChevronDown, ChevronUp } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { HelpModal } from '../components/HelpModal'
 
 export default function Home() {
   const { user, login } = useUser();
@@ -153,13 +151,11 @@ export default function Home() {
 
                   <div className="pt-4 space-y-4">
                     <Button
-                      asChild
-                      className="w-full bg-emerald-500 hover:bg-emerald-600 text-white transition-all duration-200 shadow-md py-6 text-lg"
+                      onClick={() => router.push('/search')}
+                      className="w-full bg-emerald-500 hover:bg-emerald-600 text-white transition-all duration-200 shadow-md py-6 text-lg flex items-center justify-center"
                     >
-                      <Link href="/search" className="flex items-center justify-center">
-                        <Search className="mr-2 h-6 w-6" />
-                        Fehlermeldung suchen
-                      </Link>
+                      <Search className="mr-2 h-6 w-6" />
+                      Fehlermeldung suchen
                     </Button>
                     <SupportTicketDialog>
                       <Button className="w-full bg-purple-500 hover:bg-purple-600 text-white transition-all duration-200 shadow-md flex items-center justify-center py-6 text-lg">
