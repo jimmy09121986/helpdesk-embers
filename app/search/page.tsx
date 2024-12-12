@@ -327,8 +327,8 @@ export default function Search() {
         )}
       </div>
       {selectedImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => setSelectedImage(null)}>
-          <div className="relative max-w-4xl max-h-[90vh] w-full h-full" onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={() => setSelectedImage(null)}>
+          <div className="relative w-full max-w-4xl max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
             <Button variant="ghost" size="icon" className="absolute top-2 right-2 text-white z-10" onClick={() => setSelectedImage(null)}>
               <X className="h-6 w-6" />
             </Button>
