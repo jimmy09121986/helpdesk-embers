@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function BenachrichtigungPage() {
   return (
-    <main className="container mx-auto p-4">
+    <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
       <Benachrichtigungen />
     </main>
   );

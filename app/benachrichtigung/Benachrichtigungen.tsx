@@ -294,13 +294,14 @@ export function Benachrichtigungen() {
 
   return (
     <div className="space-y-4">
-      <header className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">
-          Support-Tickets {unreadCount > 0 && <Badge variant="destructive">{unreadCount}</Badge>}
+      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 space-y-2 sm:space-y-0">
+        <h1 className="text-2xl font-bold flex items-center">
+          Support-Tickets {unreadCount > 0 && <Badge variant="destructive" className="ml-2">{unreadCount}</Badge>}
         </h1>
         <Button
           variant="outline"
           onClick={() => router.push('/dashboard')}
+          className="w-full sm:w-auto"
         >
           Dashboard
         </Button>
@@ -346,17 +347,17 @@ export function Benachrichtigungen() {
                       </CardContent>
                     </Card>
                   </DialogTrigger>
-                  <DialogContent className="sm:max-w-[700px] max-h-[80vh]" onInteractOutside={(e) => e.preventDefault()}>
+                  <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto" onInteractOutside={(e) => e.preventDefault()}>
                     <div ref={dialogRef}>
                       {selectedTicket && selectedTicket.id === ticket.id && (
                         <>
                           <DialogHeader>
-                            <DialogTitle className="text-2xl">Support-Ticket #{selectedTicket.id}</DialogTitle>
+                            <DialogTitle className="text-xl sm:text-2xl">Support-Ticket #{selectedTicket.id}</DialogTitle>
                             <DialogDescription>
                               Erstellt am: {new Date(selectedTicket.created_at).toLocaleString()}
                             </DialogDescription>
                           </DialogHeader>
-                          <div className="grid grid-cols-2 gap-4 my-4">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-4">
                             <div>
                               <strong className="block text-sm font-medium text-gray-700">Name:</strong>
                               <span>{selectedTicket.name}</span>
@@ -396,7 +397,7 @@ export function Benachrichtigungen() {
                                       {getTicketImages(selectedTicket).map((image, index) => (
                                         <div 
                                           key={index} 
-                                          className="relative w-32 h-32 cursor-pointer group" 
+                                          className="relative w-24 h-24 sm:w-32 sm:h-32 cursor-pointer group" 
                                           onClick={() => setSelectedImages(getTicketImages(selectedTicket))}
                                         >
                                           <Image 
@@ -451,11 +452,11 @@ export function Benachrichtigungen() {
                             className="mt-4"
                           />
                           <DialogFooter className="mt-4 flex flex-wrap justify-end gap-2">
-                            <Button onClick={() => openWhatsApp(selectedTicket.phone)} variant="outline" size="sm">
+                            <Button onClick={() => openWhatsApp(selectedTicket.phone)} variant="outline" size="sm" className="w-full sm:w-auto">
                               <Phone className="mr-2 h-4 w-4" />
                               WhatsApp
                             </Button>
-                            <Button onClick={handleAddComment} variant="outline" size="sm" disabled={isAddingComment}>
+                            <Button onClick={handleAddComment} variant="outline" size="sm" disabled={isAddingComment} className="w-full sm:w-auto">
                               {isAddingComment ? (
                                 <span>Wird hinzugefügt...</span>
                               ) : (
@@ -466,15 +467,15 @@ export function Benachrichtigungen() {
                               )}
                             </Button>
                             {selectedTicket.status === 'new' && (
-                              <Button onClick={handleTakeOver} variant="secondary" size="sm">Übernehmen</Button>
+                              <Button onClick={handleTakeOver} variant="secondary" size="sm" className="w-full sm:w-auto">Übernehmen</Button>
                             )}
                             {selectedTicket.status !== 'completed' && (
-                              <Button onClick={handleComplete} variant="default" size="sm">
+                              <Button onClick={handleComplete} variant="default" size="sm" className="w-full sm:w-auto">
                                 <CheckCircle className="mr-2 h-4 w-4" />
                                 Erledigt
                               </Button>
                             )}
-                            <Button variant="destructive" size="sm" onClick={() => handleDeleteTicket(selectedTicket.id)}>Löschen</Button>
+                            <Button variant="destructive" size="sm" onClick={() => handleDeleteTicket(selectedTicket.id)} className="w-full sm:w-auto">Löschen</Button>
                           </DialogFooter>
                         </>
                       )}
@@ -489,11 +490,11 @@ export function Benachrichtigungen() {
       
       {selectedImages.length > 0 && (
         <Dialog open={selectedImages.length > 0} onOpenChange={() => setSelectedImages([])}>
-          <DialogContent className="max-w-4xl">
+          <DialogContent className="max-w-[90vw] sm:max-w-4xl">
             <DialogHeader>
               <DialogTitle>Bilder</DialogTitle>
             </DialogHeader>
-            <div className="relative w-full h-[60vh]">
+            <div className="relative w-full h-[50vh] sm:h-[60vh]">
               <Image 
                 src={selectedImages[0]} 
                 alt="Vergrößertes Bild" 
@@ -507,7 +508,7 @@ export function Benachrichtigungen() {
                 {selectedImages.map((image, index) => (
                   <button
                     key={index}
-                    className={`relative w-20 h-20 cursor-pointer rounded-md overflow-hidden ${
+                    className={`relative w-16 h-16 sm:w-20 sm:h-20 cursor-pointer rounded-md overflow-hidden ${
                       image === selectedImages[0] ? 'ring-2 ring-primary' : ''
                     }`}
                     onClick={() => {
