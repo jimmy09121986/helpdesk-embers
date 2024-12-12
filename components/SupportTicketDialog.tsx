@@ -145,7 +145,7 @@ export function SupportTicketDialog({ children }: { children: React.ReactNode })
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Support-Ticket erstellen</DialogTitle>
           <DialogDescription>
@@ -201,7 +201,7 @@ export function SupportTicketDialog({ children }: { children: React.ReactNode })
             </div>
             <div className="grid grid-cols-4 items-start gap-4">
               <Label htmlFor="description" className="text-right pt-2">
-                Anliegen*
+                Beschreibung*
               </Label>
               <div className="col-span-3 space-y-1">
                 <Textarea
@@ -232,17 +232,24 @@ export function SupportTicketDialog({ children }: { children: React.ReactNode })
               </div>
             </div>
             {images.length > 0 && (
-              <div className="grid grid-cols-4 items-center gap-4">
+              <div className="grid grid-cols-4 items-start gap-4">
                 <div className="col-span-4">
                   <p className="mb-2">Ausgewählte Bilder:</p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 max-h-40 overflow-y-auto p-2 border rounded">
                     {images.map((image, index) => (
-                      <div key={index} className="relative">
-                        <Image src={URL.createObjectURL(image)} alt={`Vorschau ${index + 1}`} width={100} height={100} className="rounded-md" />
+                      <div key={index} className="relative w-20 h-20">
+                        <Image 
+                          src={URL.createObjectURL(image)} 
+                          alt={`Vorschau ${index + 1}`} 
+                          layout="fill" 
+                          objectFit="cover" 
+                          className="rounded-md" 
+                        />
                         <button
                           type="button"
                           onClick={() => removeImage(index)}
                           className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center"
+                          aria-label="Bild entfernen"
                         >
                           ×
                         </button>
@@ -253,8 +260,8 @@ export function SupportTicketDialog({ children }: { children: React.ReactNode })
               </div>
             )}
           </div>
-          <DialogFooter>
-            <Button type="submit" disabled={isSubmitting}>
+          <DialogFooter className="sticky bottom-0 bg-white pt-2">
+            <Button type="submit" disabled={isSubmitting} className="w-full">
               {isSubmitting ? 'Wird erstellt...' : 'Ticket erstellen'}
             </Button>
           </DialogFooter>
