@@ -9,16 +9,18 @@ const Navigation = () => {
   const pathname = usePathname()
   const { user } = useUser()
 
+  if (!user) {
+    return null
+  }
+
   return (
     <nav className="flex space-x-4 mb-4">
-      {user && (
-        <Link href="/dashboard" className={cn(
-          "text-sm font-medium transition-colors hover:text-primary",
-          pathname === "/dashboard" ? "text-primary" : "text-muted-foreground"
-        )}>
-          Dashboard
-        </Link>
-      )}
+      <Link href="/dashboard" className={cn(
+        "text-sm font-medium transition-colors hover:text-primary",
+        pathname === "/dashboard" ? "text-primary" : "text-muted-foreground"
+      )}>
+        Dashboard
+      </Link>
     </nav>
   )
 }
