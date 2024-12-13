@@ -46,6 +46,7 @@ export default function Search() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
+  const [zoomLevel, setZoomLevel] = useState(1);
   const { toast } = useToast()
 
   useEffect(() => {
@@ -197,6 +198,14 @@ export default function Search() {
     );
   };
 
+  const handleZoom = (event: React.WheelEvent<HTMLDivElement>) => {
+    if (event.deltaY < 0) {
+      setZoomLevel(prevZoom => Math.min(prevZoom * 1.1, 3));
+    } else {
+      setZoomLevel(prevZoom => Math.max(prevZoom / 1.1, 1));
+    }
+  };
+
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-4">
@@ -328,11 +337,18 @@ export default function Search() {
       </div>
       {selectedImage && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={() => setSelectedImage(null)}>
-          <div className="relative w-full max-w-4xl max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
+          <div className="relative w-full h-full max-w-4xl max-h-[90vh]" onClick={(e) => e.stopPropagation()}>
             <Button variant="ghost" size="icon" className="absolute top-2 right-2 text-white z-10" onClick={() => setSelectedImage(null)}>
               <X className="h-6 w-6" />
             </Button>
-            <Image src={selectedImage} alt="Vergrößertes Bild" layout="fill" objectFit="contain" />
+            <div className="w-full h-full overflow-auto" onWheel={handleZoom}>
+              <img 
+                src={selectedImage} 
+                alt="Vergrößertes Bild" 
+                className="w-full h-auto transition-transform duration-200 ease-in-out" 
+                style={{ transform: `scale(${zoomLevel})` }}
+              />
+            </div>
           </div>
         </div>
       )}

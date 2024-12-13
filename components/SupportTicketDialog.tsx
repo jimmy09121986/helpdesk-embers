@@ -189,7 +189,7 @@ export function SupportTicketDialog({ children }: { children: React.ReactNode })
               <PhoneInput
                 international
                 countryCallingCodeEditable={false}
-                defaultCountry="DE"
+                defaultCountry="AT"
                 value={phone}
                 onChange={setPhone as (value: string | undefined) => void}
                 className="col-span-3"
@@ -201,7 +201,7 @@ export function SupportTicketDialog({ children }: { children: React.ReactNode })
             </div>
             <div className="grid grid-cols-4 items-start gap-4">
               <Label htmlFor="description" className="text-right pt-2">
-                Beschreibung*
+                Anliegen*
               </Label>
               <div className="col-span-3 space-y-1">
                 <Textarea

@@ -53,6 +53,9 @@ export function Benachrichtigungen() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [selectedImages, setSelectedImages] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false)
+  const [isTakeOverConfirmOpen, setIsTakeOverConfirmOpen] = useState(false)
+  const [isCompleteConfirmOpen, setIsCompleteConfirmOpen] = useState(false)
   const { user } = useUser()
   const { toast } = useToast()
   const dialogRef = useRef<HTMLDivElement>(null)
@@ -150,6 +153,10 @@ export function Benachrichtigungen() {
   }
 
   const handleTakeOver = async () => {
+    setIsTakeOverConfirmOpen(true)
+  }
+
+  const confirmTakeOver = async () => {
     if (selectedTicket && user) {
       await updateTicket(selectedTicket.id, {
         status: 'inProgress',
@@ -162,10 +169,15 @@ export function Benachrichtigungen() {
         title: "Ticket übernommen",
         description: `Sie haben das Ticket #${selectedTicket.id} übernommen.`,
       })
+      setIsTakeOverConfirmOpen(false)
     }
   }
 
   const handleComplete = async () => {
+    setIsCompleteConfirmOpen(true)
+  }
+
+  const confirmComplete = async () => {
     if (selectedTicket && user) {
       await updateTicket(selectedTicket.id, { status: 'completed' })
       await addComment(`Ticket erledigt von ${user.email}`)
@@ -175,6 +187,7 @@ export function Benachrichtigungen() {
         title: "Ticket erledigt",
         description: `Ticket #${selectedTicket.id} wurde als erledigt markiert.`,
       })
+      setIsCompleteConfirmOpen(false)
     }
   }
 
@@ -214,35 +227,46 @@ export function Benachrichtigungen() {
   }
 
   const handleDeleteTicket = async (id: number) => {
-    try {
-      const { error } = await supabase
-        .from('support_tickets')
-        .delete()
-        .eq('id', id)
-      
-      if (error) throw error
+    setIsDeleteConfirmOpen(true)
+  }
 
-      setTickets(tickets.filter(t => t.id !== id))
-      setIsDialogOpen(false)
-      setSelectedTicket(null)
-      toast({
-        title: "Ticket gelöscht",
-        description: "Das Support-Ticket wurde erfolgreich gelöscht.",
-        variant: "destructive",
-      })
-    } catch (error) {
-      console.error('Error deleting ticket:', error)
-      toast({
-        title: "Fehler beim Löschen",
-        description: "Das Ticket konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.",
-        variant: "destructive",
-      })
+  const confirmDelete = async () => {
+    if (selectedTicket) {
+      try {
+        const { error } = await supabase
+          .from('support_tickets')
+          .delete()
+          .eq('id', selectedTicket.id)
+        
+        if (error) throw error
+
+        setTickets(tickets.filter(t => t.id !== selectedTicket.id))
+        setIsDialogOpen(false)
+        setSelectedTicket(null)
+        toast({
+          title: "Ticket gelöscht",
+          description: "Das Support-Ticket wurde erfolgreich gelöscht.",
+          variant: "destructive",
+        })
+      } catch (error) {
+        console.error('Error deleting ticket:', error)
+        toast({
+          title: "Fehler beim Löschen",
+          description: "Das Ticket konnte nicht gelöscht werden. Bitte versuchen Sie es erneut.",
+          variant: "destructive",
+        })
+      } finally {
+        setIsDeleteConfirmOpen(false)
+      }
     }
   }
 
-  const openWhatsApp = (phone: string) => {
-    const whatsappUrl = `https://web.whatsapp.com/send?phone=${phone.replace(/\D/g, '')}`
-    window.open(whatsappUrl, '_blank')
+  const openWhatsApp = (phone: string, isMobile: boolean) => {
+    const phoneNumber = phone.replace(/\D/g, '');
+    const url = isMobile
+      ? `https://wa.me/${phoneNumber}`
+      : `https://web.whatsapp.com/send?phone=${phoneNumber}`;
+    window.open(url, '_blank');
   }
 
   useEffect(() => {
@@ -452,9 +476,13 @@ export function Benachrichtigungen() {
                             className="mt-4"
                           />
                           <DialogFooter className="mt-4 flex flex-wrap justify-end gap-2">
-                            <Button onClick={() => openWhatsApp(selectedTicket.phone)} variant="outline" size="sm" className="w-full sm:w-auto">
+                            <Button onClick={() => openWhatsApp(selectedTicket.phone, false)} variant="outline" size="sm" className="w-full sm:w-auto">
                               <Phone className="mr-2 h-4 w-4" />
-                              WhatsApp
+                              WhatsApp Desktop
+                            </Button>
+                            <Button onClick={() => openWhatsApp(selectedTicket.phone, true)} variant="outline" size="sm" className="w-full sm:w-auto">
+                              <Phone className="mr-2 h-4 w-4" />
+                              WhatsApp Mobil
                             </Button>
                             <Button onClick={handleAddComment} variant="outline" size="sm" disabled={isAddingComment} className="w-full sm:w-auto">
                               {isAddingComment ? (
@@ -487,7 +515,50 @@ export function Benachrichtigungen() {
           </ul>
         )}
       </main>
-      
+      <Dialog open={isDeleteConfirmOpen} onOpenChange={setIsDeleteConfirmOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Ticket löschen</DialogTitle>
+            <DialogDescription>
+              Sind Sie sicher, dass Sie dieses Ticket löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsDeleteConfirmOpen(false)}>Abbrechen</Button>
+            <Button variant="destructive" onClick={confirmDelete}>Löschen</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={isTakeOverConfirmOpen} onOpenChange={setIsTakeOverConfirmOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Ticket übernehmen</DialogTitle>
+            <DialogDescription>
+              Möchten Sie dieses Ticket wirklich übernehmen?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsTakeOverConfirmOpen(false)}>Abbrechen</Button>
+            <Button onClick={confirmTakeOver}>Übernehmen</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={isCompleteConfirmOpen} onOpenChange={setIsCompleteConfirmOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Ticket als erledigt markieren</DialogTitle>
+            <DialogDescription>
+              Sind Sie sicher, dass Sie dieses Ticket als erledigt markieren möchten?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsCompleteConfirmOpen(false)}>Abbrechen</Button>
+            <Button onClick={confirmComplete}>Als erledigt markieren</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       {selectedImages.length > 0 && (
         <Dialog open={selectedImages.length > 0} onOpenChange={() => setSelectedImages([])}>
           <DialogContent className="max-w-[90vw] sm:max-w-4xl">
