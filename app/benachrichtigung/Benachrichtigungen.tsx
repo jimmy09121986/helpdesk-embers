@@ -475,35 +475,47 @@ export function Benachrichtigungen() {
                             onChange={(e) => setNewComment(e.target.value)}
                             className="mt-4"
                           />
-                          <DialogFooter className="mt-4 flex flex-wrap justify-end gap-2">
-                            <Button onClick={() => openWhatsApp(selectedTicket.phone, false)} variant="outline" size="sm" className="w-full sm:w-auto">
-                              <Phone className="mr-2 h-4 w-4" />
-                              WhatsApp Desktop
-                            </Button>
-                            <Button onClick={() => openWhatsApp(selectedTicket.phone, true)} variant="outline" size="sm" className="w-full sm:w-auto">
-                              <Phone className="mr-2 h-4 w-4" />
-                              WhatsApp Mobil
-                            </Button>
-                            <Button onClick={handleAddComment} variant="outline" size="sm" disabled={isAddingComment} className="w-full sm:w-auto">
-                              {isAddingComment ? (
-                                <span>Wird hinzugefügt...</span>
-                              ) : (
-                                <>
-                                  <MessageCircle className="mr-2 h-4 w-4" />
-                                  Kommentar
-                                </>
-                              )}
-                            </Button>
-                            {selectedTicket.status === 'new' && (
-                              <Button onClick={handleTakeOver} variant="secondary" size="sm" className="w-full sm:w-auto">Übernehmen</Button>
-                            )}
-                            {selectedTicket.status !== 'completed' && (
-                              <Button onClick={handleComplete} variant="default" size="sm" className="w-full sm:w-auto">
-                                <CheckCircle className="mr-2 h-4 w-4" />
-                                Erledigt
-                              </Button>
-                            )}
-                            <Button variant="destructive" size="sm" onClick={() => handleDeleteTicket(selectedTicket.id)} className="w-full sm:w-auto">Löschen</Button>
+                          <DialogFooter className="mt-4">
+                            <div className="w-full space-y-2">
+                              <div className="flex flex-wrap justify-between gap-2">
+                                <div className="flex-1 min-w-[200px]">
+                                  <Button onClick={() => openWhatsApp(selectedTicket.phone, false)} variant="outline" size="sm" className="w-full">
+                                    <Phone className="mr-2 h-4 w-4" />
+                                    WhatsApp Desktop
+                                  </Button>
+                                </div>
+                                <div className="flex-1 min-w-[200px]">
+                                  <Button onClick={() => openWhatsApp(selectedTicket.phone, true)} variant="outline" size="sm" className="w-full">
+                                    <Phone className="mr-2 h-4 w-4" />
+                                    WhatsApp Mobil
+                                  </Button>
+                                </div>
+                                <div className="flex-1 min-w-[200px]">
+                                  <Button onClick={handleAddComment} variant="outline" size="sm" disabled={isAddingComment} className="w-full">
+                                    {isAddingComment ? (
+                                      <span>Wird hinzugefügt...</span>
+                                    ) : (
+                                      <>
+                                        <MessageCircle className="mr-2 h-4 w-4" />
+                                        Kommentar
+                                      </>
+                                    )}
+                                  </Button>
+                                </div>
+                              </div>
+                              <div className="flex flex-wrap justify-end gap-2">
+                                {selectedTicket.status === 'new' && (
+                                  <Button onClick={handleTakeOver} variant="secondary" size="sm">Übernehmen</Button>
+                                )}
+                                {selectedTicket.status !== 'completed' && (
+                                  <Button onClick={handleComplete} variant="default" size="sm">
+                                    <CheckCircle className="mr-2 h-4 w-4" />
+                                    Erledigt
+                                  </Button>
+                                )}
+                                <Button variant="destructive" size="sm" onClick={() => handleDeleteTicket(selectedTicket.id)}>Löschen</Button>
+                              </div>
+                            </div>
                           </DialogFooter>
                         </>
                       )}

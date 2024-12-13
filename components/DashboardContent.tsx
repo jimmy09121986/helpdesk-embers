@@ -17,8 +17,7 @@ import {
 import { useUser } from '@/contexts/UserContext';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/lib/supabase';
-import { Plus, Edit, Trash2, Calendar, User, X } from 'lucide-react';
-import { Bell } from 'lucide-react';
+import { Plus, Edit, Trash2, Calendar, User, X, Bell, FileAudio } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 
 interface Category {
@@ -253,6 +252,12 @@ export default function DashboardContent() {
                     {newTicketsCount}
                   </Badge>
                 )}
+              </Button>
+            </Link>
+            <Link href="/evaluations" className="w-full sm:w-auto">
+              <Button variant="outline" className="w-full sm:w-auto">
+                <FileAudio className="w-4 h-4 mr-2" />
+                Soundfiles
               </Button>
             </Link>
             <Button variant="outline" onClick={handleLogout} className="w-full sm:w-auto">
